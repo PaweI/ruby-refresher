@@ -1,22 +1,27 @@
 # keep only the elements that start with an a
 def select_elements_starting_with_a(array)
+  array.select { |element| element if element[0] == 'a' }
 end
 
 # keep only the elements that start with a vowel
 def select_elements_starting_with_vowel(array)
+  array.select { |element| element if "aeiou".include?(element[0]) } 
 end
 
 # remove instances of nil (but NOT false) from an array
 def remove_nils_from_array(array)
+  array.select { |element| element if element != nil }
 end
 
 # remove instances of nil AND false from an array
 def remove_nils_and_false_from_array(array)
+  array.select { |element| element if element != false }
 end
 
 # don't reverse the array, but reverse every word inside it. e.g.
 # ['dog', 'monkey'] becomes ['god', 'yeknom']
 def reverse_every_element_in_array(array)
+  array.map { |element| element.reverse }
 end
 
 # given an array of student names, like ['Bob', 'Dave', 'Clive']
@@ -24,20 +29,26 @@ end
 # [['Bob', 'Clive'], ['Bob', 'Dave'], ['Clive', 'Dave']]
 # make sure you don't have the same pairing twice, 
 def every_possible_pairing_of_students(array)
+
 end
 
 # discard the first 3 elements of an array, 
 # e.g. [1, 2, 3, 4, 5, 6] becomes [4, 5, 6]
 def all_elements_except_first_3(array)
+  3.times { array.shift }
+  return array
 end
 
 # add an element to the beginning of an array
 def add_element_to_beginning_of_array(array, element)
+  array.unshift(element)
 end
 
 # sort an array of words by their last letter, e.g.
 # ['sky', 'puma', 'maker'] becomes ['puma', 'maker', 'sky']
 def array_sort_by_last_letter_of_word(array)
+  sorted = array.map { |element| element[-1]}.sort
+  array.map { |element| element if sorted.include?(element[-1]) }
 end
 
 # cut strings in half, and return the first half, e.g.
@@ -49,6 +60,7 @@ end
 # turn a positive integer into a negative integer. A negative integer
 # stays negative
 def make_numbers_negative(number)
+  number>0 ? -number : number
 end
 
 # turn an array of numbers into two arrays of numbers, one an array of 
@@ -76,20 +88,24 @@ end
 # add up all the numbers in an array, so [1, 3, 5, 6]
 # returns 15
 def total_of_array(array)
+  array.reduce { |element, sum| sum += element }
 end
 
 # turn an array into itself repeated twice. So [1, 2, 3]
 # becomes [1, 2, 3, 1, 2, 3]
 def double_array(array)
+  array*2
 end
 
 # convert a symbol into a string
 def turn_symbol_into_string(symbol)
+  symbol.to_s
 end
 
 # get the average from an array, rounded to the nearest integer
 # so [10, 15, 25] should return 33
 def average_of_array(array)
+  (array.reduce { |element, sum| sum += element } / array.length.to_f + 0.5).to_i 
 end
 
 # get all the elements in an array, up until the first element
@@ -127,6 +143,8 @@ end
 # take out all the capital letters from a string
 # so 'Hello JohnDoe' becomes 'ello ohnoe'
 def remove_capital_letters_from_string(string)
+  # [*"A".."Z"].each { |letter| string.delete(letter) if string.include?(letter) }
+  # return string
 end
 
 # round up a float up and convert it to an Integer,
