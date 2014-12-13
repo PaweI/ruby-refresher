@@ -46,8 +46,7 @@ end
 # sort an array of words by their last letter, e.g.
 # ['sky', 'puma', 'maker'] becomes ['puma', 'maker', 'sky']
 def array_sort_by_last_letter_of_word(array)
-  sorted = array.map { |element| element[-1]}.sort
-  array.map { |element| element if sorted.include?(element[-1]) }
+  array.sort_by { |word| word[-1] }
 end
 
 # cut strings in half, and return the first half, e.g.
@@ -123,6 +122,12 @@ end
 # [1, 3, 5, 4, 1, 2, 6, 2, 1, 3, 7]
 # becomes [1, 3, 5, 4, 1, 2]
 def get_elements_until_greater_than_five(array)
+  new_arr = []
+  array.each do |el| 
+    break if el > 5
+    new_arr << el 
+  end
+  new_arr
 end
 
 # turn an array (with an even number of elements) into a hash, by
@@ -209,9 +214,10 @@ end
 # where 'special character' means anything apart from the letters
 # a-z (uppercase and lower) or numbers
 def check_a_string_for_special_characters(string)
-  # string.split('').each { |char| p false if [*48..57, *65..90, *97..122].include?(char.ord); break }
-  # return true
-  string.length.times { |index| return false if [*48..57, *65..90, *97..122].include?(char.ord) }
+  char_ords = [*48..57, *65..90, *97..122]
+  array = []
+  string.each_char { |char| array << false if char_ords.include?(char.ord) }
+  array.length != string.length
 end
 
 # get the upper limit of a range. e.g. for the range 1..20, you
@@ -223,7 +229,7 @@ end
 # should return true for a 3 dot range like 1...20, false for a 
 # normal 2 dot range
 def is_a_3_dot_range?(range)
-  range.to_s.include?('...')
+  (range).to_s.include?('...')
 end
 
 # get the square root of a number
