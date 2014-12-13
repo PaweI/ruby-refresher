@@ -187,6 +187,7 @@ end
 # take a date and format it like dd/mm/yyyy, so Halloween 2013
 # becomes 31/10/2013
 def format_date_nicely(date)
+  date.strftime("%d/%m/%Y")
 end
 
 # get the domain name *without* the .com part, from an email address
@@ -201,7 +202,7 @@ end
 # 'the lion the witch and the wardrobe' becomes
 # 'The Lion the Witch and the Wardrobe'
 def titleize_a_string(string)
-
+  string.capitalize!.split.each { |word| word.capitalize! if !["the", "and", "a"].include?(word) }.join(" ")
 end
 
 # return true if a string contains any special characters
@@ -222,6 +223,7 @@ end
 # should return true for a 3 dot range like 1...20, false for a 
 # normal 2 dot range
 def is_a_3_dot_range?(range)
+  range.to_s.include?('...')
 end
 
 # get the square root of a number
