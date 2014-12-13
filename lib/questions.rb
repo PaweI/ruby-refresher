@@ -78,14 +78,21 @@ end
 # e.g. 'bob'. So in the array ['bob', 'radar', 'eat'], there
 # are 2 palindromes (bob and radar), so the method should return 2
 def number_of_elements_that_are_palindromes(array)
+  array.select { |element| element if element == element.reverse }.count
 end
 
 # return the shortest word in an array
 def shortest_word_in_array(array)
+  shortest = array[0]
+  array.each { |word| shortest = word if word.length < shortest.length }
+  shortest
 end
 
-# return the shortest word in an array
+# return the longest word in an array
 def longest_word_in_array(array)
+  shortest = array[0]
+  array.each { |word| shortest = word if word.length > shortest.length }
+  shortest
 end
 
 # add up all the numbers in an array, so [1, 3, 5, 6]
@@ -122,6 +129,13 @@ end
 # pairing up elements. e.g. ['a', 'b', 'c', 'd'] becomes
 # {'a' => 'b', 'c' => 'd'}
 def convert_array_to_a_hash(array)
+  array_hash = {}
+  i = 0
+  while i < array.length
+    array_hash[array[i]] = array[i+1]
+    i += 2
+  end
+  array_hash
 end
 
 # get all the letters used in an array of words and return
@@ -129,35 +143,45 @@ end
 # . e.g. the array ['cat', 'dog', 'fish'] becomes
 # ['a', 'c', 'd', 'f', 'g', 'h', 'i', 'o', 's', 't']
 def get_all_letters_in_array_of_words(array)
+  letters = []
+  array.each { |word| word.each_char { |letter| letters << letter } }
+  letters.sort!
 end
 
 # swap the keys and values in a hash. e.g.
 # {'a' => 'b', 'c' => 'd'} becomes
 # {'b' => 'a', 'd' => 'c'}
 def swap_keys_and_values_in_a_hash(hash)
+  keys = hash.keys
+  new_hash = {}
+  hash.values.each { |value| new_hash[value] = keys[0]; keys.shift }
+  new_hash
 end
 
 # in a hash where the keys and values are all numbers
 # add all the keys and all the values together, e.g.
 # {1 => 1, 2 => 2} becomes 6
 def add_together_keys_and_values(hash)
+  hash.keys.reduce { |num, sum| sum += num } + hash.values.reduce { |sum, num| sum += num } 
 end
 
 # take out all the capital letters from a string
 # so 'Hello JohnDoe' becomes 'ello ohnoe'
 def remove_capital_letters_from_string(string)
-  # [*"A".."Z"].each { |letter| string.delete(letter) if string.include?(letter) }
-  # return string
+  [*"A".."Z"].each { |letter| string.delete!(letter) if string.include?(letter) }
+  return string
 end
 
 # round up a float up and convert it to an Integer,
 # so 3.214 becomes 4
 def round_up_number(float)
+  (float + 1).to_i
 end
 
 # round down a float up and convert it to an Integer,
 # so 9.52 becomes 9
 def round_down_number(float)
+  float.to_i
 end
 
 # take a date and format it like dd/mm/yyyy, so Halloween 2013
@@ -168,6 +192,7 @@ end
 # get the domain name *without* the .com part, from an email address
 # so alex@makersacademy.com becomes makersacademy
 def get_domain_name_from_email_address(email)
+  /(@\w+\.)/.match(email)[0].delete('@.')
 end
 
 # capitalize the first letter in each word of a string, 
@@ -176,17 +201,22 @@ end
 # 'the lion the witch and the wardrobe' becomes
 # 'The Lion the Witch and the Wardrobe'
 def titleize_a_string(string)
+
 end
 
 # return true if a string contains any special characters
 # where 'special character' means anything apart from the letters
 # a-z (uppercase and lower) or numbers
 def check_a_string_for_special_characters(string)
+  # string.split('').each { |char| p false if [*48..57, *65..90, *97..122].include?(char.ord); break }
+  # return true
+  string.length.times { |index| return false if [*48..57, *65..90, *97..122].include?(char.ord) }
 end
 
 # get the upper limit of a range. e.g. for the range 1..20, you
 # should return 20
 def get_upper_limit_of(range)
+  [*range][-1]
 end
 
 # should return true for a 3 dot range like 1...20, false for a 
@@ -196,10 +226,12 @@ end
 
 # get the square root of a number
 def square_root_of(number)
+  number**0.5
 end
 
 # count the number of words in a file
 def word_count_a_file(file_path)
+  File.read(file_path).split.count
 end
 
 # --- tougher ones ---
