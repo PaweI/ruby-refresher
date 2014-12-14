@@ -29,6 +29,7 @@ end
 # [['Bob', 'Clive'], ['Bob', 'Dave'], ['Clive', 'Dave']]
 # make sure you don't have the same pairing twice, 
 def every_possible_pairing_of_students(array)
+  array.combination(2).to_a
 end
 
 # discard the first 3 elements of an array, 
@@ -248,12 +249,15 @@ end
 # called call_method_from_string('foobar')
 # the method foobar should be invoked
 def call_method_from_string(str_method)
+  str_method.call
 end
 
 # return true if the date is a uk bank holiday for 2014
 # the list of bank holidays is here:
 # https://www.gov.uk/bank-holidays
 def is_a_2014_bank_holiday?(date)
+  bank_holidays = [[1,1], [4,18], [4,21], [5,5], [5,26], [8,25], [12,25], [12,26]]
+  bank_holidays.map { |day| Time.new(2014, day.first, day.last) }.include?(date)
 end
 
 # given your birthday this year, this method tells you
@@ -261,6 +265,8 @@ end
 # e.g. january 1st, will next be a friday in 2016
 # return the day as a capitalized string like 'Friday'
 def your_birthday_is_on_a_friday_in_the_year(birthday)
+  year = birthday.year + 1
+  loop { return year if Time.new(year, birthday.day, birthday.month).wday == 5; year += 1 }
 end
 
 # in a file, total the number of times words of different lengths
@@ -268,13 +274,24 @@ end
 # I have 5 words which are 3 letters long, 1 which is 2 letters long
 # and 1 that is 4 letters long. Return it as a hash in the format
 # word_length => count, e.g. {2 => 1, 3 => 5, 4 => 1}
+
 def count_words_of_each_length_in_a_file(file_path)
+  file = File.read(file_path).delete(",.:").split(" ")
+  hash = {}; file.each { |word| hash[word.length] ? hash[word.length] += 1 : hash[word.length] = 1  }; hash
 end
 
 # implement fizzbuzz without modulo, i.e. the % method
 # go from 1 to 100
 # (there's no RSpec test for this one)
-def fizzbuzz_without_modulo
+def divisible_by(number, divisor)
+  (number / divisor) * divisor == number
+end
+
+def fizzbuzz_without_modulo(num)
+  return "FizzBuzz" if divisible_by(num, 15)
+  return "Fizz" if divisible_by(num, 3)
+  return "Buzz" if divisible_by(num, 5)
+  num
 end
 
 # print the lyrics of the song 99 bottles of beer on the wall

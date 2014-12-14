@@ -201,8 +201,8 @@ describe 'the Friday test :)' do
     a = is_a_2014_bank_holiday?(Time.new(2014, 8, 25))
     b = is_a_2014_bank_holiday?(Time.new(2014, 8, 26))
 
-    expect(a).to be_true
-    expect(b).to be_false
+    expect(a).to be true
+    expect(b).to be false
   end
 
   it 'your_birthday_is_on_a_friday_in_the_year' do
@@ -211,7 +211,31 @@ describe 'the Friday test :)' do
   end
 
   it 'count_words_of_each_length_in_a_file' do
-    n = count_words_of_each_length_in_a_file('lorem.txt') || []
+    n = count_words_of_each_length_in_a_file('data/lorem.txt') || []
     expect(Hash[n.sort]).to eq({1=>1, 2=>5, 3=>7, 4=>12, 5=>14, 6=>4, 7=>8, 8=>6, 9=>6, 10=>2, 11=>2, 12=>3}) 
+  end
+
+
+  context 'FizzBuzz' do
+    it 'checks if number divisible by 3, 5 or 15' do
+      a = divisible_by(25, 3)
+      b = divisible_by(25, 5)
+      c = divisible_by(30, 15)
+      expect(a).to be false
+      expect(b).to be true
+      expect(c).to be true
+    end
+
+    it 'Fizz, Buzz, Fizzbuzz or return number' do
+      a = fizzbuzz_without_modulo(10)
+      b = fizzbuzz_without_modulo(3)
+      c = fizzbuzz_without_modulo(15)
+      d = fizzbuzz_without_modulo(7)
+
+      expect(a).to eq "Buzz"
+      expect(b).to eq "Fizz"
+      expect(c).to eq "FizzBuzz"
+      expect(d).to eq 7
+    end
   end
 end
