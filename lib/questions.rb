@@ -1,27 +1,27 @@
 # keep only the elements that start with an a
 def select_elements_starting_with_a(array)
-  array.select { |element| element if element[0] == 'a' }
+  array.select { |word| word[0] == 'a' }
 end
 
 # keep only the elements that start with a vowel
 def select_elements_starting_with_vowel(array)
-  array.select { |element| element if "aeiou".include?(element[0]) } 
+  array.select { |el| "aeiou".include?(el[0]) } 
 end
 
 # remove instances of nil (but NOT false) from an array
 def remove_nils_from_array(array)
-  array.each { |element| array.delete(element) if element == nil }
+  array.compact
 end
 
 # remove instances of nil AND false from an array
 def remove_nils_and_false_from_array(array)
-  array.select { |element| element if element != false }
+  array.reject(&:!)
 end
 
 # don't reverse the array, but reverse every word inside it. e.g.
 # ['dog', 'monkey'] becomes ['god', 'yeknom']
 def reverse_every_element_in_array(array)
-  array.map { |element| element.reverse }
+  array.map { |el| el.reverse }
 end
 
 # given an array of student names, like ['Bob', 'Dave', 'Clive']
@@ -29,14 +29,13 @@ end
 # [['Bob', 'Clive'], ['Bob', 'Dave'], ['Clive', 'Dave']]
 # make sure you don't have the same pairing twice, 
 def every_possible_pairing_of_students(array)
-  array.combination(2).to_a
+  array.combination(2)
 end
 
 # discard the first 3 elements of an array, 
 # e.g. [1, 2, 3, 4, 5, 6] becomes [4, 5, 6]
 def all_elements_except_first_3(array)
-  3.times { array.shift }
-  return array
+  array.drop(3)
 end
 
 # add an element to the beginning of an array
@@ -60,7 +59,7 @@ end
 # turn a positive integer into a negative integer. A negative integer
 # stays negative
 def make_numbers_negative(number)
-  number>0 ? -number : number
+  -number.abs
 end
 
 # turn an array of numbers into two arrays of numbers, one an array of 
@@ -68,9 +67,7 @@ end
 # even numbers come first
 # so [1, 2, 3, 4, 5, 6] becomes [[2, 4, 6], [1, 3, 5]]
 def separate_array_into_even_and_odd_numbers(array)
-  even_numbers = array.select { |element| element if element%2 == 0 }
-  odd_numbers = array.select { |element| element if element%2 != 0 }
-  [even_numbers, odd_numbers]
+  [array.select(&:even?), array.select(&:odd?)]
 end
 
 # count the numbers of elements in an element which are palindromes
@@ -78,7 +75,7 @@ end
 # e.g. 'bob'. So in the array ['bob', 'radar', 'eat'], there
 # are 2 palindromes (bob and radar), so the method should return 2
 def number_of_elements_that_are_palindromes(array)
-  array.select { |element| element if element == element.reverse }.count
+  array.select { |el| el == el.reverse }.count
 end
 
 # return the shortest word in an array
@@ -98,7 +95,7 @@ end
 # add up all the numbers in an array, so [1, 3, 5, 6]
 # returns 15
 def total_of_array(array)
-  array.reduce { |element, sum| sum += element }
+  array.reduce(:+)
 end
 
 # turn an array into itself repeated twice. So [1, 2, 3]
@@ -115,7 +112,7 @@ end
 # get the average from an array, rounded to the nearest integer
 # so [10, 15, 25] should return 33
 def average_of_array(array)
-  (array.reduce { |element, sum| sum += element } / array.length.to_f + 0.5).to_i 
+  (array.reduce(:+) / array.length.to_f + 0.5).to_i 
 end
 
 # get all the elements in an array, up until the first element
@@ -123,25 +120,14 @@ end
 # [1, 3, 5, 4, 1, 2, 6, 2, 1, 3, 7]
 # becomes [1, 3, 5, 4, 1, 2]
 def get_elements_until_greater_than_five(array)
-  new_arr = []
-  array.each do |el| 
-    break if el > 5
-    new_arr << el 
-  end
-  new_arr
+  array.take_while { |num| num < 6}
 end
 
 # turn an array (with an even number of elements) into a hash, by
 # pairing up elements. e.g. ['a', 'b', 'c', 'd'] becomes
 # {'a' => 'b', 'c' => 'd'}
 def convert_array_to_a_hash(array)
-  array_hash = {}
-  i = 0
-  while i < array.length
-    array_hash[array[i]] = array[i+1]
-    i += 2
-  end
-  array_hash
+  Hash[*array]
 end
 
 # get all the letters used in an array of words and return
@@ -266,7 +252,8 @@ end
 # return the day as a capitalized string like 'Friday'
 def your_birthday_is_on_a_friday_in_the_year(birthday)
   year = birthday.year + 1
-  loop { return year if Time.new(year, birthday.day, birthday.month).wday == 5; year += 1 }
+  until Time.new(year, birthday.day, birthday.month).wday == 5; year += 1 end
+  year
 end
 
 # in a file, total the number of times words of different lengths
