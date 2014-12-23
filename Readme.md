@@ -1,6 +1,29 @@
-#####Regular friday Challenge. Week 7
+####Week 7 Challenge at Makers Academy!
 
-**Techs:**
+####SYNOPSIS
 
-- Ruby
-- Rspec
+Refreshing Ruby
+
+####MY APPROACH
+
+
+####TECHNOLOGIES:
+
+- *Ruby*
+
+- *Rspec*
+
+
+
+####HOW TO RUN
+
+type in your terminal/commandline
+
+
+####CODE SNIPPET
+
+
+####FUTURE IMPROVEMENTS
+
+
+
