@@ -21,24 +21,23 @@ As this a refresher, you can check my passing tests by running in you terminal
 
 ```
 rspec
-
 ```
 
 ####CODE SNIPPET
 
 My results:
 
-![alt tag](https://github.com/PaweI/ruby-refresher/master/public/results.png)
+![alt tag](https://github.com/PaweI/ruby-refresher/blob/master/public/results.png)
 
 ####WHAT I'VE LEARNT
 
 There is always ways to refactor your code. Like:
 
-![alt tag](https://github.com/PaweI/ruby-refresher/master/public/before.png)
+![alt tag](https://github.com/PaweI/ruby-refresher/blob/master/public/before.png)
 
 can become:
 
-![alt tag](https://github.com/PaweI/ruby-refresher/master/public/after.png)
+![alt tag](https://github.com/PaweI/ruby-refresher/blob/master/public/after.png)
 
 
 ####FUTURE IMPROVEMENTS
