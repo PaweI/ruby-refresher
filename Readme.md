@@ -33,11 +33,20 @@ My results:
 
 There is always ways to refactor your code. Like:
 
-![alt tag](https://github.com/PaweI/ruby-refresher/blob/master/public/before.png)
+```ruby
+def all_elements_except_first_3(array)
+  3.times { array.shift }
+  array
+end
+```
 
 can become:
 
-![alt tag](https://github.com/PaweI/ruby-refresher/blob/master/public/after.png)
+```ruby
+def all_elements_except_first_3(array)
+  array.drop(3)
+end
+```
 
 
 ####FUTURE IMPROVEMENTS
