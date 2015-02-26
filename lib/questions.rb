@@ -5,7 +5,7 @@ end
 
 # keep only the elements that start with a vowel
 def select_elements_starting_with_vowel(array)
-  array.select { |el| "aeiou".include?(el[0]) } 
+  array.select { |el| 'aeiou'.include?(el[0]) }
 end
 
 # remove instances of nil (but NOT false) from an array
@@ -21,20 +21,20 @@ end
 # don't reverse the array, but reverse every word inside it. e.g.
 # ['dog', 'monkey'] becomes ['god', 'yeknom']
 def reverse_every_element_in_array(array)
-  array.map { |el| el.reverse }
+  array.map(&:reverse)
 end
 
 # given an array of student names, like ['Bob', 'Dave', 'Clive']
 # give every possible pairing - in this case:
 # [['Bob', 'Clive'], ['Bob', 'Dave'], ['Clive', 'Dave']]
-# make sure you don't have the same pairing twice, 
+# make sure you don't have the same pairing twice,
 def every_possible_pairing_of_students(array)
   array.combination(2)
 end
 
-# discard the first 3 elements of an array, 
+# discard the first 3 elements of an array,
 # e.g. [1, 2, 3, 4, 5, 6] becomes [4, 5, 6]
-def all_elements_except_first_3(array)
+def discard_the_first_three(array)
   array.drop(3)
 end
 
@@ -62,7 +62,7 @@ def make_numbers_negative(number)
   -number.abs
 end
 
-# turn an array of numbers into two arrays of numbers, one an array of 
+# turn an array of numbers into two arrays of numbers, one an array of
 # even numbers, the other an array of odd numbers
 # even numbers come first
 # so [1, 2, 3, 4, 5, 6] becomes [[2, 4, 6], [1, 3, 5]]
@@ -101,7 +101,7 @@ end
 # turn an array into itself repeated twice. So [1, 2, 3]
 # becomes [1, 2, 3, 1, 2, 3]
 def double_array(array)
-  array*2
+  array * 2
 end
 
 # convert a symbol into a string
@@ -112,7 +112,7 @@ end
 # get the average from an array, rounded to the nearest integer
 # so [10, 15, 25] should return 33
 def average_of_array(array)
-  (array.reduce(:+) / array.length.to_f + 0.5).to_i 
+  (array.reduce(:+) / array.length.to_f + 0.5).to_i
 end
 
 # get all the elements in an array, up until the first element
@@ -120,7 +120,7 @@ end
 # [1, 3, 5, 4, 1, 2, 6, 2, 1, 3, 7]
 # becomes [1, 3, 5, 4, 1, 2]
 def get_elements_until_greater_than_five(array)
-  array.take_while { |num| num < 6}
+  array.take_while { |num| num < 6 }
 end
 
 # turn an array (with an even number of elements) into a hash, by
@@ -135,9 +135,11 @@ end
 # . e.g. the array ['cat', 'dog', 'fish'] becomes
 # ['a', 'c', 'd', 'f', 'g', 'h', 'i', 'o', 's', 't']
 def get_all_letters_in_array_of_words(array)
-  letters = []
-  array.each { |word| word.each_char { |letter| letters << letter } }
-  letters.sort!
+  @letters = []; array.each { |word| letters_in_to_array(word) }; @letters.sort!
+end
+
+def letters_in_to_array(word)
+  word.each_char { |letter| @letters << letter }
 end
 
 # swap the keys and values in a hash. e.g.
@@ -154,14 +156,14 @@ end
 # add all the keys and all the values together, e.g.
 # {1 => 1, 2 => 2} becomes 6
 def add_together_keys_and_values(hash)
-  hash.keys.reduce { |num, sum| sum += num } + hash.values.reduce { |sum, num| sum += num } 
+  hash.keys.reduce { |num, sum| sum += num } + hash.values.reduce { |sum, num| sum += num }
 end
 
 # take out all the capital letters from a string
 # so 'Hello JohnDoe' becomes 'ello ohnoe'
 def remove_capital_letters_from_string(string)
-  [*"A".."Z"].each { |letter| string.delete!(letter) if string.include?(letter) }
-  return string
+  [*'A'..'Z'].each { |letter| string.delete!(letter) if string.include?(letter) }
+  string
 end
 
 # round up a float up and convert it to an Integer,
@@ -179,7 +181,7 @@ end
 # take a date and format it like dd/mm/yyyy, so Halloween 2013
 # becomes 31/10/2013
 def format_date_nicely(date)
-  date.strftime("%d/%m/%Y")
+  date.strftime('%d/%m/%Y')
 end
 
 # get the domain name *without* the .com part, from an email address
@@ -188,13 +190,13 @@ def get_domain_name_from_email_address(email)
   /(@\w+\.)/.match(email)[0].delete('@.')
 end
 
-# capitalize the first letter in each word of a string, 
+# capitalize the first letter in each word of a string,
 #  except 'a', 'and' and 'the'
 # *unless* they come at the start of the start of the string, e.g.
 # 'the lion the witch and the wardrobe' becomes
 # 'The Lion the Witch and the Wardrobe'
 def titleize_a_string(string)
-  string.capitalize!.split.each { |word| word.capitalize! if !["the", "and", "a"].include?(word) }.join(" ")
+  string.capitalize!.split.each { |word| word.capitalize! unless %w(the and a).include?(word) }.join(' ')
 end
 
 # return true if a string contains any special characters
@@ -213,7 +215,7 @@ def get_upper_limit_of(range)
   [*range][-1]
 end
 
-# should return true for a 3 dot range like 1...20, false for a 
+# should return true for a 3 dot range like 1...20, false for a
 # normal 2 dot range
 def is_a_3_dot_range?(range)
   (range).to_s.include?('...')
@@ -242,7 +244,7 @@ end
 # the list of bank holidays is here:
 # https://www.gov.uk/bank-holidays
 def is_a_2014_bank_holiday?(date)
-  bank_holidays = [[1,1], [4,18], [4,21], [5,5], [5,26], [8,25], [12,25], [12,26]]
+  bank_holidays = [[1, 1], [4, 18], [4, 21], [5, 5], [5, 26], [8, 25], [12, 25], [12, 26]]
   bank_holidays.map { |day| Time.new(2014, day.first, day.last) }.include?(date)
 end
 
@@ -263,7 +265,7 @@ end
 # word_length => count, e.g. {2 => 1, 3 => 5, 4 => 1}
 
 def count_words_of_each_length_in_a_file(file_path)
-  file = File.read(file_path).delete(",.:").split(" ")
+  file = File.read(file_path).delete(',.:').split(' ')
   hash = {}; file.each { |word| hash[word.length] ? hash[word.length] += 1 : hash[word.length] = 1  }; hash
 end
 
@@ -275,15 +277,15 @@ def divisible_by(number, divisor)
 end
 
 def fizzbuzz_without_modulo(num)
-  return "FizzBuzz" if divisible_by(num, 15)
-  return "Fizz" if divisible_by(num, 3)
-  return "Buzz" if divisible_by(num, 5)
+  return 'FizzBuzz' if divisible_by(num, 15)
+  return 'Fizz' if divisible_by(num, 3)
+  return 'Buzz' if divisible_by(num, 5)
   num
 end
 
 # print the lyrics of the song 99 bottles of beer on the wall
 # http://www.99-bottles-of-beer.net/lyrics.html
-# make sure you use the singular when you have one bottle of 
+# make sure you use the singular when you have one bottle of
 # beer on the wall, and print 'no more bottles of beer on the wall'
 # at the end.
 # (there's no RSpec test for this one)
